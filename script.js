@@ -62,13 +62,18 @@ function breakLineByLength(text, maxChars) {
     .join("\n");
 }
 
-function createLockedBody() {
-  return breakLineByLength("■".repeat(260), 50);
+function getLineLimit() {
+  return window.matchMedia("(max-width: 720px)").matches ? 20 : 50;
+}
+
+function createLockedBody(maxChars) {
+  return breakLineByLength("■".repeat(260), maxChars);
 }
 
 function buildResultHtml(genre) {
   const data = fortuneData[genre] || fortuneData["片思い・進展"];
-  const freeText = breakLineByLength(extendToLength(data.freeText, 500), 50);
+  const lineLimit = getLineLimit();
+  const freeText = breakLineByLength(extendToLength(data.freeText, 500), lineLimit);
 
   return `
     <section class="result-block">
@@ -87,13 +92,13 @@ function buildResultHtml(genre) {
 
     <section class="result-block locked">
       <h3>${data.titles[1]}</h3>
-      <p class="locked-body">${createLockedBody()}</p>
+      <p class="locked-body">${createLockedBody(lineLimit)}</p>
       <div class="locked-badge">ここから先は個人鑑定を依頼した方のみにお伝えします</div>
     </section>
 
     <section class="result-block locked">
       <h3>${data.titles[2]}</h3>
-      <p class="locked-body">${createLockedBody()}</p>
+      <p class="locked-body">${createLockedBody(lineLimit)}</p>
       <div class="locked-badge">ここから先は個人鑑定を依頼した方のみにお伝えします</div>
     </section>
   `;

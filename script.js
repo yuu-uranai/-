@@ -49,6 +49,7 @@ function extendToLength(text, target) {
 }
 
 function breakLineByLength(text, maxChars) {
+  if (!maxChars || maxChars <= 0) return text;
   return text
     .split("\n")
     .map((line) => {
@@ -63,7 +64,7 @@ function breakLineByLength(text, maxChars) {
 }
 
 function getLineLimit() {
-  return window.matchMedia("(max-width: 720px)").matches ? 20 : 50;
+  return window.matchMedia("(max-width: 720px)").matches ? 0 : 50;
 }
 
 function createLockedBody(maxChars) {

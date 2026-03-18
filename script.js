@@ -48,13 +48,27 @@ function extendToLength(text, target) {
   return output;
 }
 
+function breakLineByLength(text, maxChars) {
+  return text
+    .split("\n")
+    .map((line) => {
+      const chars = [...line];
+      const chunks = [];
+      for (let i = 0; i < chars.length; i += maxChars) {
+        chunks.push(chars.slice(i, i + maxChars).join(""));
+      }
+      return chunks.join("\n");
+    })
+    .join("\n");
+}
+
 function createLockedBody() {
-  return "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■";
+  return breakLineByLength("■".repeat(260), 50);
 }
 
 function buildResultHtml(genre) {
   const data = fortuneData[genre] || fortuneData["片思い・進展"];
-  const freeText = extendToLength(data.freeText, 500);
+  const freeText = breakLineByLength(extendToLength(data.freeText, 500), 50);
 
   return `
     <section class="result-block">

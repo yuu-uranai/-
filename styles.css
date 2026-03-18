@@ -269,7 +269,7 @@ input:focus {
 .locked .locked-body {
   filter: blur(4px);
   user-select: none;
-  white-space: normal;
+  white-space: pre-line;
   line-height: 1.65;
 }
 

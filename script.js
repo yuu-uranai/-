@@ -64,7 +64,11 @@ function breakLineByLength(text, maxChars) {
 }
 
 function getLineLimit() {
-  return window.matchMedia("(max-width: 720px)").matches ? 0 : 50;
+  const hasTouch =
+    window.matchMedia("(pointer: coarse)").matches ||
+    window.matchMedia("(any-pointer: coarse)").matches ||
+    navigator.maxTouchPoints > 0;
+  return hasTouch ? 0 : 50;
 }
 
 function createLockedBody(maxChars) {
